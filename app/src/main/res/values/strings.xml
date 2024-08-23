@@ -1,0 +1,19 @@
+<resources>
+    <!-- Language Strings -->
+    <string name="app_name">BanqueMisrLogin</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forget_username_password">Forget Username/Password?</string>
+    <string name="login">Login</string>
+    <string name="need_help">Need Help?</string>
+    <string name="contact_us">Contact us</string>
+
+    <!-- Captions for Images -->
+    <string name="our_products">Our Products</string>
+    <string name="exchange_rate">Exchange Rates</string>
+    <string name="security_tips">Security Tips</string>
+    <string name="nearest_branch_or_atm">Nearest Branch or ATM</string>
+
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
+</resources>
