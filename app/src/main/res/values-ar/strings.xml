@@ -6,9 +6,11 @@
     <string name="login">تسجيل الدخول</string>
     <string name="need_help">هل تحتاج إلى مساعدة؟</string>
     <string name="contact_us">اتصل بنا</string>
+    <string name="button_text">العربية</string>
     <string name="our_products">منتجاتنا</string>
     <string name="exchange_rate">أسعار الصرف</string>
     <string name="security_tips">نصائح الأمان</string>
+    <string name="language">EN</string>
     <string name="nearest_branch_or_atm">أقرب فرع أو صراف آلي</string>
     <string name="hide">إخفاء</string>
     <string name="show">إظهار</string>

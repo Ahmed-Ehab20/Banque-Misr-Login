@@ -30,7 +30,6 @@ import com.example.banquemisrlogin.ui.theme.BanqueMisrLoginTheme
 import com.example.banquemisrlogin.ui.theme.LightRed
 import com.example.banquemisrlogin.ui.theme.Red
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,38 +48,54 @@ fun LanguageSwitcher() {
     val configuration = context.resources.configuration
     val deviceLanguage = configuration.locales.get(0).language
 
-    val buttonAlignment = if (deviceLanguage == "ar") Alignment.TopStart else Alignment.TopEnd
-    val buttonText = if (deviceLanguage == "ar") "EN" else "العربية"
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 36.dp)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.bm_icon),
-            contentDescription = null,
+        Column(
             modifier = Modifier
-                .align(if (deviceLanguage == "ar") Alignment.TopEnd else Alignment.TopStart)
-                .padding(16.dp)
-        )
-        
-        TextButton(
-            onClick = {},
-            modifier = Modifier
-                .align(buttonAlignment)
-                .padding(16.dp)
+                .align(
+                    when (deviceLanguage) {
+                        "ar" -> Alignment.TopStart
+                        else -> Alignment.TopStart
+                    }
+                )
+                .padding(start = 16.dp, top = 16.dp)
         ) {
-            Text(
-                text = buttonText,
-                color = LightRed,
-                style = TextStyle(fontWeight = FontWeight.Bold)
+            Image(
+                painter = painterResource(id = R.drawable.bm_icon),
+                contentDescription = null
             )
+        }
+        Column(
+            modifier = Modifier
+                .align(
+                    when (deviceLanguage) {
+                        "ar" -> Alignment.TopEnd
+                        else -> Alignment.TopEnd
+                    }
+                )
+                .padding(end = 16.dp, top = 16.dp)
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.Top)
+        ) {
+            TextButton(
+                onClick = {}
+            ) {
+                Text(
+                    text = stringResource(id = R.string.language),
+                    color = Red,
+                    fontSize = 18.sp,
+                    style = TextStyle(fontWeight = FontWeight.Bold)
+                )
+            }
         }
 
         UserInputFields(deviceLanguage)
     }
 }
+
 
 
 
@@ -151,14 +166,22 @@ fun UserInputFields(language: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp),
-                    horizontalArrangement = if (language == "en") Arrangement.Start else Arrangement.End
+                    horizontalArrangement = if (language == "ar") Arrangement.Start else Arrangement.End
                 ) {
-                    TextButton(onClick = {}) {
-                        Text(
-                            text = stringResource(id = if (language == "en") R.string.forget_username_password else R.string.forget_username_password),
-                            color = Color.Black,
-                            textDecoration = TextDecoration.Underline
-                        )
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        TextButton(onClick = {}) {
+                            Text(
+                                text = buildAnnotatedString {
+                                    val forgetText = stringResource(id = R.string.forget_username_password)
+                                    withStyle(style = SpanStyle(color = Color.Black, textDecoration = TextDecoration.Underline)) {
+                                        append(forgetText)
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
 
@@ -173,7 +196,7 @@ fun UserInputFields(language: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp)
-                        .height(40.dp)
+                        .height(52.dp)
                 ) {
                     Text(
                         text = stringResource(id = if (language == "en") R.string.login else R.string.login),
@@ -188,16 +211,17 @@ fun UserInputFields(language: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp),
-                    horizontalArrangement = if (language == "en") Arrangement.Start else Arrangement.End
+                    horizontalArrangement = if (language == "ar") Arrangement.Start else Arrangement.End
                 ) {
                     Column(
-                        horizontalAlignment = if (language == "en") Alignment.Start else Alignment.End
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         TextButton(onClick = {}) {
                             Text(
                                 text = buildAnnotatedString {
-                                    val needHelpText = stringResource(id = if (language == "en") R.string.need_help else R.string.need_help)
-                                    val contactUsText = stringResource(id = if (language == "en") R.string.contact_us else R.string.contact_us)
+                                    val needHelpText = stringResource(id = R.string.need_help)
+                                    val contactUsText = stringResource(id = R.string.contact_us)
 
                                     withStyle(style = SpanStyle(color = Color.Black)) {
                                         append(needHelpText)
@@ -211,21 +235,23 @@ fun UserInputFields(language: String) {
                                 }
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        HorizontalDivider(
-                            color = Color.LightGray,
-                            thickness = 2.dp,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        ImageRowWithCaptions()
                     }
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider(
+                    color = Color.LightGray,
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 32.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                ImageRowWithCaptions()
             }
         }
     }
 }
-
 
 
 @Composable
@@ -270,8 +296,7 @@ fun ImageRowWithCaptions() {
     }
 }
 
-
-@Preview(locale = "ar")
+@Preview(showBackground = true)
 @Composable
 fun LanguageSwitcherPreview() {
     BanqueMisrLoginTheme {
